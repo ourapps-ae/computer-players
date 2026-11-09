@@ -1,0 +1,208 @@
+{
+  "schemaVersion": 1,
+  "id": "computer-players-connected",
+  "title": "Computer players: connected consumer",
+  "status": "example",
+  "view": "component",
+  "focus": "component",
+  "definitions": [
+    {
+      "id": "ourapps-ae.computer-players",
+      "name": "Computer players",
+      "kind": "component",
+      "status": "example",
+      "package": "ourapps-ae/computer-players",
+      "version": "0.4.0",
+      "ports": [
+        {
+          "id": "player-strategy",
+          "name": "Player strategy",
+          "direction": "input",
+          "kind": "interface",
+          "type": "ae/player-strategy",
+          "version": "1.0.0",
+          "required": true,
+          "cardinality": "one"
+        },
+        {
+          "id": "game-clock",
+          "name": "Game clock",
+          "direction": "input",
+          "kind": "interface",
+          "type": "ae/game-clock",
+          "version": "1.0.0",
+          "required": true,
+          "cardinality": "one"
+        },
+        {
+          "id": "seating",
+          "name": "Seating",
+          "direction": "input",
+          "kind": "interface",
+          "type": "ae/seating",
+          "version": "1.0.0",
+          "required": true,
+          "cardinality": "one"
+        },
+        {
+          "id": "computer-players",
+          "name": "Computer players",
+          "direction": "output",
+          "kind": "interface",
+          "type": "ae/computer-players",
+          "version": "1.0.0"
+        }
+      ],
+      "settings": [
+        {
+          "id": "names",
+          "name": "Names",
+          "type": "string",
+          "required": false,
+          "secret": false,
+          "default": "Robin Sam Alex Jordan Casey Morgan Taylor Riley"
+        },
+        {
+          "id": "mode",
+          "name": "Mode",
+          "type": "string",
+          "required": false,
+          "secret": false,
+          "default": "on-request"
+        },
+        {
+          "id": "thinkMinMs",
+          "name": "Thinkminms",
+          "type": "number",
+          "required": false,
+          "secret": false,
+          "default": 300
+        },
+        {
+          "id": "thinkSpreadMs",
+          "name": "Thinkspreadms",
+          "type": "number",
+          "required": false,
+          "secret": false,
+          "default": 1200
+        },
+        {
+          "id": "minimumGapMs",
+          "name": "Minimumgapms",
+          "type": "number",
+          "required": false,
+          "secret": false,
+          "default": 4000
+        },
+        {
+          "id": "rebuyDelayMs",
+          "name": "Rebuydelayms",
+          "type": "number",
+          "required": false,
+          "secret": false,
+          "default": 4000
+        }
+      ]
+    },
+    {
+      "id": "consumer",
+      "name": "Example application consumer",
+      "kind": "application",
+      "status": "example",
+      "revision": "0.1.0",
+      "ports": [
+        {
+          "id": "computer-players",
+          "name": "Computer players",
+          "direction": "input",
+          "kind": "interface",
+          "type": "ae/computer-players",
+          "version": "1.0.0",
+          "required": true,
+          "cardinality": "one"
+        },
+        {
+          "id": "player-strategy",
+          "name": "Player strategy",
+          "direction": "output",
+          "kind": "interface",
+          "type": "ae/player-strategy",
+          "version": "1.0.0"
+        },
+        {
+          "id": "game-clock",
+          "name": "Game clock",
+          "direction": "output",
+          "kind": "interface",
+          "type": "ae/game-clock",
+          "version": "1.0.0"
+        },
+        {
+          "id": "seating",
+          "name": "Seating",
+          "direction": "output",
+          "kind": "interface",
+          "type": "ae/seating",
+          "version": "1.0.0"
+        }
+      ],
+      "settings": []
+    }
+  ],
+  "instances": [
+    {
+      "id": "component",
+      "name": "Computer players",
+      "definition": "ourapps-ae.computer-players",
+      "configuration": {}
+    },
+    {
+      "id": "consumer",
+      "name": "Example consumer",
+      "definition": "consumer",
+      "configuration": {}
+    }
+  ],
+  "connections": [
+    {
+      "source": {
+        "instance": "component",
+        "port": "computer-players"
+      },
+      "target": {
+        "instance": "consumer",
+        "port": "computer-players"
+      }
+    },
+    {
+      "source": {
+        "instance": "consumer",
+        "port": "player-strategy"
+      },
+      "target": {
+        "instance": "component",
+        "port": "player-strategy"
+      }
+    },
+    {
+      "source": {
+        "instance": "consumer",
+        "port": "game-clock"
+      },
+      "target": {
+        "instance": "component",
+        "port": "game-clock"
+      }
+    },
+    {
+      "source": {
+        "instance": "consumer",
+        "port": "seating"
+      },
+      "target": {
+        "instance": "component",
+        "port": "seating"
+      }
+    }
+  ]
+}

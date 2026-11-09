@@ -1,0 +1,269 @@
+{
+  "format": 1,
+  "kind": "component",
+  "identity": {
+    "name": "ourapps-ae/computer-players",
+    "version": "0.4.0",
+    "sourceRevision": "19905b75dbea89fbfd424d67fe26c81aaed0e018",
+    "sourceTreeDigest": "0000000000000000000000000000000000000000000000000000000000000000",
+    "licenceStatus": "deferred"
+  },
+  "facilities": [
+    {
+      "id": "fill-seats",
+      "description": "Add one computer player on request, or fill every empty seat when the game starts"
+    },
+    {
+      "id": "names",
+      "description": "A configurable list of names with a neutral default"
+    },
+    {
+      "id": "pacing",
+      "description": "Settle, minimum gap and thinking time before a computer moves; delay before it accepts a rebuy"
+    },
+    {
+      "id": "take-over",
+      "description": "Optionally play for a person who is away or sitting out"
+    },
+    {
+      "id": "memory",
+      "description": "Carries the strategy's memory of how each opponent has played"
+    }
+  ],
+  "documents": {
+    "contract": "CONTRACT.md",
+    "interfaces": [
+      "interfaces/computer-players.json",
+      "interfaces/required/game-clock.json",
+      "interfaces/required/player-strategy.json",
+      "interfaces/required/seating.json",
+      "suitability.json"
+    ],
+    "examples": [
+      "examples/consumer.ts"
+    ],
+    "licenceNotice": "LICENCE"
+  },
+  "collect": [
+    {
+      "id": "names",
+      "type": "string",
+      "grammar": "label",
+      "required": false,
+      "secret": false,
+      "default": "Robin Sam Alex Jordan Casey Morgan Taylor Riley"
+    },
+    {
+      "id": "mode",
+      "type": "string",
+      "grammar": "label",
+      "required": false,
+      "secret": false,
+      "default": "on-request"
+    },
+    {
+      "id": "thinkMinMs",
+      "type": "integer",
+      "grammar": "integer",
+      "required": false,
+      "secret": false,
+      "default": 300
+    },
+    {
+      "id": "thinkSpreadMs",
+      "type": "integer",
+      "grammar": "integer",
+      "required": false,
+      "secret": false,
+      "default": 1200
+    },
+    {
+      "id": "minimumGapMs",
+      "type": "integer",
+      "grammar": "integer",
+      "required": false,
+      "secret": false,
+      "default": 4000
+    },
+    {
+      "id": "rebuyDelayMs",
+      "type": "integer",
+      "grammar": "integer",
+      "required": false,
+      "secret": false,
+      "default": 4000
+    }
+  ],
+  "files": [
+    {
+      "path": "CONTRACT.md",
+      "executable": false
+    },
+    {
+      "path": "INSTRUCTIONS.md",
+      "executable": false
+    },
+    {
+      "path": "LICENCE",
+      "executable": false
+    },
+    {
+      "path": "SOURCE.md",
+      "executable": false
+    },
+    {
+      "path": "examples/consumer.ts",
+      "executable": false
+    },
+    {
+      "path": "implementation/server/computers.ts",
+      "executable": false
+    },
+    {
+      "path": "interfaces/computer-players.json",
+      "executable": false
+    },
+    {
+      "path": "interfaces/required/game-clock.json",
+      "executable": false
+    },
+    {
+      "path": "interfaces/required/player-strategy.json",
+      "executable": false
+    },
+    {
+      "path": "interfaces/required/seating.json",
+      "executable": false
+    },
+    {
+      "path": "suitability.json",
+      "executable": false
+    },
+    {
+      "path": "tests/fakes.ts",
+      "executable": false
+    },
+    {
+      "path": "tests/web.test.ts",
+      "executable": false
+    },
+    {
+      "path": "tools.lock.json",
+      "executable": false
+    },
+    {
+      "path": "visual/definition.json",
+      "executable": false
+    },
+    {
+      "path": "visual/examples/connected.json",
+      "executable": false
+    },
+    {
+      "path": "visual/output/connected.png",
+      "executable": false
+    },
+    {
+      "path": "visual/output/connected.svg",
+      "executable": false
+    },
+    {
+      "path": "visual/output/description.md",
+      "executable": false
+    }
+  ],
+  "artefacts": [
+    {
+      "source": "implementation/server/computers.ts",
+      "destination": "components/computer-players/server/computers.ts",
+      "template": false,
+      "executable": false
+    }
+  ],
+  "dependencies": [],
+  "provides": [
+    {
+      "id": "computer-players",
+      "type": "ae/computer-players",
+      "version": "1.0.0",
+      "path": "interfaces/computer-players.json"
+    }
+  ],
+  "requires": [
+    {
+      "id": "player-strategy",
+      "type": "ae/player-strategy",
+      "version": "1.0.0",
+      "path": "interfaces/required/player-strategy.json"
+    },
+    {
+      "id": "game-clock",
+      "type": "ae/game-clock",
+      "version": "1.0.0",
+      "path": "interfaces/required/game-clock.json"
+    },
+    {
+      "id": "seating",
+      "type": "ae/seating",
+      "version": "1.0.0",
+      "path": "interfaces/required/seating.json"
+    }
+  ],
+  "visual": {
+    "definition": "visual/definition.json",
+    "examples": [
+      "visual/examples/connected.json"
+    ],
+    "outputs": [
+      "visual/output/connected.svg",
+      "visual/output/connected.png"
+    ],
+    "descriptions": [
+      "visual/output/description.md"
+    ]
+  },
+  "capabilities": {
+    "hosts": [],
+    "secrets": [],
+    "writes": [
+      "components/computer-players/server/computers.ts"
+    ]
+  },
+  "infrastructure": {
+    "accounts": [],
+    "costStatus": "unmeasured",
+    "deployedReason": "No deployed service; injected resources and local library functions only."
+  },
+  "verification": [
+    {
+      "id": "web",
+      "root": "package",
+      "argv": [
+        "node",
+        "--test",
+        "tests/web.test.ts"
+      ],
+      "cwd": ".",
+      "prepare": [],
+      "tools": {
+        "node": "26.5.0"
+      },
+      "fixtures": [
+        "tests/fakes.ts",
+        "examples/consumer.ts"
+      ],
+      "locks": [
+        "tools.lock.json"
+      ],
+      "network": false,
+      "timeoutSeconds": 120,
+      "expectedExit": 0,
+      "scope": "required-local",
+      "requirements": []
+    }
+  ],
+  "upgrade": {
+    "policy": "patch",
+    "migration": "files-only"
+  }
+}

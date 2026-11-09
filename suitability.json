@@ -1,0 +1,18 @@
+{
+  "format": 1,
+  "jobs": [
+    "computer-players"
+  ],
+  "profiles": [
+    {
+      "id": "any",
+      "load": {},
+      "cost": "none",
+      "regions": [
+        "any"
+      ],
+      "compliance": []
+    }
+  ],
+  "notes": "Pure library; the only state is the strategy memory, a few hundred bytes per opponent."
+}

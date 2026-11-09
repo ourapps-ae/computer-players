@@ -1,0 +1,11 @@
+{
+  "id": "player-strategy",
+  "type": "ae/player-strategy",
+  "version": "1.0.0",
+  "notes": "What computer-players needs from the player-strategy component (poker-strategy provides it). The observation is whatever the game's rules say one player may know (see game-rules.observation); moves are the game's own move values.",
+  "operations": {
+    "newMemory": { "arguments": [], "returns": "unknown (JSON-serialisable memory of how each opponent has played)" },
+    "choose": { "arguments": ["observation:unknown", "playerId:string", "rng:()=>number", "memory:unknown"], "returns": "unknown|null (a move, or null when it has none; must not change memory)" },
+    "observe": { "arguments": ["memory:unknown", "observation:unknown", "playerId:string", "move:unknown"], "returns": "unknown|undefined (the new memory; undefined when memory was changed in place)" }
+  }
+}

@@ -1,0 +1,98 @@
+{
+  "id": "ourapps-ae.computer-players",
+  "name": "Computer players",
+  "kind": "component",
+  "status": "example",
+  "package": "ourapps-ae/computer-players",
+  "version": "0.4.0",
+  "ports": [
+    {
+      "id": "player-strategy",
+      "name": "Player strategy",
+      "direction": "input",
+      "kind": "interface",
+      "type": "ae/player-strategy",
+      "version": "1.0.0",
+      "required": true,
+      "cardinality": "one"
+    },
+    {
+      "id": "game-clock",
+      "name": "Game clock",
+      "direction": "input",
+      "kind": "interface",
+      "type": "ae/game-clock",
+      "version": "1.0.0",
+      "required": true,
+      "cardinality": "one"
+    },
+    {
+      "id": "seating",
+      "name": "Seating",
+      "direction": "input",
+      "kind": "interface",
+      "type": "ae/seating",
+      "version": "1.0.0",
+      "required": true,
+      "cardinality": "one"
+    },
+    {
+      "id": "computer-players",
+      "name": "Computer players",
+      "direction": "output",
+      "kind": "interface",
+      "type": "ae/computer-players",
+      "version": "1.0.0"
+    }
+  ],
+  "settings": [
+    {
+      "id": "names",
+      "name": "Names",
+      "type": "string",
+      "required": false,
+      "secret": false,
+      "default": "Robin Sam Alex Jordan Casey Morgan Taylor Riley"
+    },
+    {
+      "id": "mode",
+      "name": "Mode",
+      "type": "string",
+      "required": false,
+      "secret": false,
+      "default": "on-request"
+    },
+    {
+      "id": "thinkMinMs",
+      "name": "Thinkminms",
+      "type": "number",
+      "required": false,
+      "secret": false,
+      "default": 300
+    },
+    {
+      "id": "thinkSpreadMs",
+      "name": "Thinkspreadms",
+      "type": "number",
+      "required": false,
+      "secret": false,
+      "default": 1200
+    },
+    {
+      "id": "minimumGapMs",
+      "name": "Minimumgapms",
+      "type": "number",
+      "required": false,
+      "secret": false,
+      "default": 4000
+    },
+    {
+      "id": "rebuyDelayMs",
+      "name": "Rebuydelayms",
+      "type": "number",
+      "required": false,
+      "secret": false,
+      "default": 4000
+    }
+  ]
+}

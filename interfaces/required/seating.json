@@ -1,0 +1,13 @@
+{
+  "id": "seating",
+  "type": "ae/seating",
+  "version": "1.0.0",
+  "notes": "What computer-players needs from the seating component (see its provided interface for the full set).",
+  "operations": {
+    "isFull": { "arguments": ["state:SeatingState"], "returns": "boolean" },
+    "find": { "arguments": ["state:SeatingState", "id:string"], "returns": "Seat|undefined" },
+    "findByName": { "arguments": ["state:SeatingState", "name:string"], "returns": "Seat|undefined" },
+    "join": { "arguments": ["state:SeatingState", "id:string", "name:string", "options:{computer?:boolean}"], "returns": "Outcome" },
+    "canAddComputer": { "arguments": ["state:SeatingState", "byId:string"], "returns": "Outcome" }
+  }
+}

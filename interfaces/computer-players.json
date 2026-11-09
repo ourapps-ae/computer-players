@@ -1,0 +1,123 @@
+{
+  "id": "computer-players",
+  "type": "ae/computer-players",
+  "version": "1.0.0",
+  "notes": "Built once from settings and the strategy, clock and seating components: createComputers(settings, {strategy, clock, seating}). SeatingState, game clock state (ClockState) and observations are opaque here. Clock times are milliseconds on the action clock; wall times are epoch milliseconds. The derived values settings.enabled (mode is not none), settings.fillEmptySeats (mode is fill-empty) and settings.takeOverAbsent (same as enabled) are on the object createComputers returns.",
+  "types": {
+    "ComputersState": "{memory:unknown}",
+    "Outcome": "{ok:true,state:SeatingState,name:string}|{ok:false,code:string}"
+  },
+  "settings": {
+    "names": "string list, or one text separated by spaces or commas (the installer setting is space separated; its grammar allows no comma); the names computers sit under, in order; neutral defaults ship",
+    "mode": "string, none | on-request | fill-empty, default on-request. none: no computer is seated (add is refused with notAllowed, fill adds none, nobody plays for an absent person). on-request: a person adds one, and a computer plays for a person who is away or sitting out. fill-empty: as on-request and fill() seats computers until the table is full",
+    "thinkMinMs": "integer, default 300",
+    "thinkSpreadMs": "integer, default 1200; thinking time is thinkMinMs plus a random share of this",
+    "minimumGapMs": "integer, default 4000; a computer never moves sooner than this after now",
+    "rebuyDelayMs": "integer, default 4000; delay before a computer accepts a rebuy"
+  },
+  "operations": {
+    "create": {
+      "arguments": [],
+      "returns": "ComputersState"
+    },
+    "forget": {
+      "arguments": [],
+      "returns": "ComputersState (a new game: no memory)"
+    },
+    "idFor": {
+      "arguments": [
+        "name:string"
+      ],
+      "returns": "string (stable player id for a computer name)"
+    },
+    "nextName": {
+      "arguments": [
+        "seats:SeatingState"
+      ],
+      "returns": "string|null (first configured name not sitting)"
+    },
+    "isComputer": {
+      "arguments": [
+        "seats:SeatingState",
+        "id:string"
+      ],
+      "returns": "boolean"
+    },
+    "add": {
+      "arguments": [
+        "seats:SeatingState",
+        "byId:string"
+      ],
+      "returns": "Outcome (notAllowed when enabled is false or seating refuses; seating's roomFull; roomFull also when every name is taken)"
+    },
+    "fill": {
+      "arguments": [
+        "seats:SeatingState"
+      ],
+      "returns": "{state:SeatingState,added:string[]}"
+    },
+    "actsFor": {
+      "arguments": [
+        "seats:SeatingState",
+        "player:{id:string,connected:boolean,sittingOut:boolean}"
+      ],
+      "returns": "boolean"
+    },
+    "moveDeadline": {
+      "arguments": [
+        "clock:ClockState",
+        "settleUntilMs:number",
+        "rng:()=>number"
+      ],
+      "returns": "number (action-clock deadline)"
+    },
+    "isDue": {
+      "arguments": [
+        "clock:ClockState",
+        "deadlineMs:number"
+      ],
+      "returns": "boolean"
+    },
+    "wakeAt": {
+      "arguments": [
+        "clock:ClockState",
+        "deadlineMs:number"
+      ],
+      "returns": "number (wall time the deadline falls due)"
+    },
+    "rebuyAt": {
+      "arguments": [
+        "clock:ClockState"
+      ],
+      "returns": "number (action-clock time a computer accepts a rebuy offered now)"
+    },
+    "rebuyDelayMs": {
+      "arguments": [],
+      "returns": "number (the rebuyDelayMs setting)"
+    },
+    "choose": {
+      "arguments": [
+        "state:ComputersState",
+        "observation:unknown",
+        "playerId:string",
+        "rng:()=>number"
+      ],
+      "returns": "{move:unknown|null,state:ComputersState}"
+    },
+    "observe": {
+      "arguments": [
+        "state:ComputersState",
+        "observation:unknown",
+        "playerId:string",
+        "move:unknown"
+      ],
+      "returns": "ComputersState"
+    },
+    "parseNames": {
+      "arguments": [
+        "text:string"
+      ],
+      "returns": "string[] (split on spaces and commas; empty and repeated entries dropped)"
+    }
+  }
+}

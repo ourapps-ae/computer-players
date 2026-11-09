@@ -1,0 +1,158 @@
+{
+  "name": "computer-players",
+  "version": "0.4.0",
+  "title": "Computer players",
+  "description": "Computer players that fill empty seats, play for people who are away, and wait a human-like time before moving, over an injected player strategy, game clock and seating.",
+  "facilities": [
+    {
+      "id": "fill-seats",
+      "description": "Add one computer player on request, or fill every empty seat when the game starts"
+    },
+    {
+      "id": "names",
+      "description": "A configurable list of names with a neutral default"
+    },
+    {
+      "id": "pacing",
+      "description": "Settle, minimum gap and thinking time before a computer moves; delay before it accepts a rebuy"
+    },
+    {
+      "id": "take-over",
+      "description": "Optionally play for a person who is away or sitting out"
+    },
+    {
+      "id": "memory",
+      "description": "Carries the strategy's memory of how each opponent has played"
+    }
+  ],
+  "provides": [
+    {
+      "id": "computer-players",
+      "type": "ae/computer-players",
+      "version": "1.0.0",
+      "path": "interfaces/computer-players.json"
+    }
+  ],
+  "requires": [
+    {
+      "id": "player-strategy",
+      "type": "ae/player-strategy",
+      "version": "1.0.0",
+      "path": "interfaces/required/player-strategy.json"
+    },
+    {
+      "id": "game-clock",
+      "type": "ae/game-clock",
+      "version": "1.0.0",
+      "path": "interfaces/required/game-clock.json"
+    },
+    {
+      "id": "seating",
+      "type": "ae/seating",
+      "version": "1.0.0",
+      "path": "interfaces/required/seating.json"
+    }
+  ],
+  "collect": [
+    {
+      "id": "names",
+      "type": "string",
+      "grammar": "label",
+      "required": false,
+      "secret": false,
+      "default": "Robin Sam Alex Jordan Casey Morgan Taylor Riley"
+    },
+    {
+      "id": "mode",
+      "type": "string",
+      "grammar": "label",
+      "required": false,
+      "secret": false,
+      "default": "on-request"
+    },
+    {
+      "id": "thinkMinMs",
+      "type": "integer",
+      "grammar": "integer",
+      "required": false,
+      "secret": false,
+      "default": 300
+    },
+    {
+      "id": "thinkSpreadMs",
+      "type": "integer",
+      "grammar": "integer",
+      "required": false,
+      "secret": false,
+      "default": 1200
+    },
+    {
+      "id": "minimumGapMs",
+      "type": "integer",
+      "grammar": "integer",
+      "required": false,
+      "secret": false,
+      "default": 4000
+    },
+    {
+      "id": "rebuyDelayMs",
+      "type": "integer",
+      "grammar": "integer",
+      "required": false,
+      "secret": false,
+      "default": 4000
+    }
+  ],
+  "suites": [
+    {
+      "id": "web",
+      "argv": [
+        "node",
+        "--test",
+        "tests/web.test.ts"
+      ],
+      "tools": {
+        "node": "26.5.0"
+      },
+      "fixtures": [
+        "tests/fakes.ts",
+        "examples/consumer.ts"
+      ]
+    }
+  ],
+  "tools": {
+    "node": "26.5.0"
+  },
+  "platforms": [
+    "server"
+  ],
+  "text": {
+    "purpose": "`computer-players` seats and paces computer players. It takes the next unused name from a configurable list and seats it as a computer player, can fill every empty seat when the game starts, decides whether the computer side moves for a given player (always for a computer, and optionally for a person who is away or sitting out), works out when the move falls due (never sooner than a minimum gap after now, never before the table has settled, then a thinking time of a minimum plus a random share of a spread), and the delay before a computer accepts a rebuy. The moves themselves come from the injected player strategy; the component carries the strategy's memory of opponents between moves.",
+    "userInputs": "Settings (all optional): `names` (a space separated list, default eight neutral first names; the installer's label grammar allows no comma, so a name from the setting cannot hold a space; `parseNames` splits on spaces, and the API takes a list; the recipe's poker names stay in the recipe), `mode` (`none`, `on-request` or `fill-empty`; default `on-request`; label grammar), `thinkMinMs` (300), `thinkSpreadMs` (1200), `minimumGapMs` (4000) and `rebuyDelayMs` (4000). `mode`: `none` seats no computer (`add` is refused, `fill` adds none, nobody plays for an absent person), which is how a recipe without computer players uses this component; `on-request` lets a person add a computer and has a computer play for a person who is away or sitting out; `fill-empty` does the same and also fills every empty seat when the game starts. `createComputers(...).settings` carries the derived values `enabled` (mode is not none), `fillEmptySeats` (mode is fill-empty) and `takeOverAbsent` (same as enabled). Names must be 1 to 20 plain characters and distinct.",
+    "integration": "Build it once with `createComputers(settings, {strategy, clock, seating})` from `implementation/server/computers.ts`. The turn engine keeps the state (`create`) in the game state, calls `add` for the add-computer action, `fill` when the game starts, `actsFor` and `moveDeadline` when it sets a player's turn, `isDue` when the room asks for due moves, `choose` and `observe` for the strategy, and `rebuyDelayMs` for the tournament. The strategy's `observation` is whatever the game rules give a player as what they know. The clock is game-clock's `elapsed(clock, 'action')` and `wallAt(clock, 'action', ms)`; its state type is `ClockState`. The strategy is poker-strategy's `newMemory`, `choose(observation, playerId, rng, memory)` and `observe(memory, observation, playerId, move)`; `observe` may return the new memory or change it in place.",
+    "infrastructure": "No service is deployed. The only state is the strategy's memory, part of the game state the room stores. No accounts or keys.",
+    "verification": "`node --test tests/web.test.ts` checks settings, neutral default names (none of the recipe's poker names), name list parsing (space separated, the default fitting aepm's label grammar), `mode` (the default, the three derived values for each mode, refusal of an unknown mode), mode `none`, adding until names or seats run out, filling, take-over of absent players, deadline arithmetic (settle, gap, thinking time, bounds), wake time, rebuy time, strategy calls that cannot change the stored memory, and the runnable consumer. The tests use small stand-ins for the strategy, clock and seating (`tests/fakes.ts`). No Swift or Kotlin: the recipe's clients have no computer-player code.",
+    "scenarios": "A person sits alone, taps add computer and a computer named Robin sits. With mode `fill-empty` the host starts with two people at a nine-seat room and seven computers join. A computer is next to act at action-clock 10000 with the table settled at 14000: it moves at 14000 plus 300 plus up to 1200 more. With mode `on-request` or `fill-empty` the computer side plays for a person whose connection has gone.",
+    "updates": "Patch updates replace files; no stored data of its own beyond the strategy memory in the game state. Removal deletes the owned sources and the application's imports. A computer plays for a person who is away unless mode is `none`."
+  },
+  "agentInstructions": "Select `ourapps-ae/computer-players` once per recipe, always. Map the recipe's computer players answer to `mode`: `none`, `on-request` (default) or `fill-empty`. Set `names` only when the recipe has its own list. Connect `player-strategy` to the strategy component (poker-strategy for poker), `game-clock` and `seating`, then connect the provided `computer-players` to turn-engine (it needs the port even for mode `none`). Give `names` as words separated by spaces.",
+  "developerInstructions": "Nothing to supply: no accounts or keys. Choose names that fit the application (each 1 to 20 plain characters); the shipped list is neutral. To change how quickly computers play, change `thinkMinMs`, `thinkSpreadMs` and `minimumGapMs`. To check it works, run the commands below.",
+  "suitability": {
+    "format": 1,
+    "jobs": [
+      "computer-players"
+    ],
+    "profiles": [
+      {
+        "id": "any",
+        "load": {},
+        "cost": "none",
+        "regions": [
+          "any"
+        ],
+        "compliance": []
+      }
+    ],
+    "notes": "Pure library; the only state is the strategy memory, a few hundred bytes per opponent."
+  }
+}
