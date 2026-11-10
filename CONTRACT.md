@@ -21,15 +21,17 @@ Settings (all optional): `names` (a space separated list, default eight neutral 
 - `implementation/server/computers.ts` -> `components/computer-players/server/computers.ts`
 
 Dependencies: none.
-`tools.lock.json` pins verification tools: node 26.5.0. Licence wording remains deferred.
+`tools.lock.json` pins verification tools: node 26.5.0. Licence: `Apache-2.0` (`LICENCE`, `NOTICE`).
 
 ## Provided interfaces
-- `interfaces/computer-players.json` defines `computer-players` (ae/computer-players) version 1.0.0.
+- `interfaces/computer-players.json` defines `computer-players` (ae/computer-players) version 1.0.0: an OpenRPC 1.3.2 document, one method per function (a member of a created object is `<Type>.<member>`), with parameter, result and data types as JSON Schema 2020-12 (`components.schemas`) and thrown errors under `errors`.
 
 ## Required interfaces
 - `player-strategy` (ae/player-strategy) version 1.0.0, supplied by the recipe or application.
 - `game-clock` (ae/game-clock) version 1.0.0, supplied by the recipe or application.
 - `seating` (ae/seating) version 1.0.0, supplied by the recipe or application.
+
+Each `interfaces/required-<id>.json` is a byte copy of the providing component's document.
 
 ## Integration
 Build it once with `createComputers(settings, {strategy, clock, seating})` from `implementation/server/computers.ts`. The turn engine keeps the state (`create`) in the game state, calls `add` for the add-computer action, `fill` when the game starts, `actsFor` and `moveDeadline` when it sets a player's turn, `isDue` when the room asks for due moves, `choose` and `observe` for the strategy, and `rebuyDelayMs` for the tournament. The strategy's `observation` is whatever the game rules give a player as what they know. The clock is game-clock's `elapsed(clock, 'action')` and `wallAt(clock, 'action', ms)`; its state type is `ClockState`. The strategy is poker-strategy's `newMemory`, `choose(observation, playerId, rng, memory)` and `observe(memory, observation, playerId, move)`; `observe` may return the new memory or change it in place.

@@ -1,6 +1,6 @@
 {
   "name": "computer-players",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "title": "Computer players",
   "description": "Computer players that fill empty seats, play for people who are away, and wait a human-like time before moving, over an injected player strategy, game clock and seating.",
   "facilities": [
@@ -38,19 +38,19 @@
       "id": "player-strategy",
       "type": "ae/player-strategy",
       "version": "1.0.0",
-      "path": "interfaces/required/player-strategy.json"
+      "path": "interfaces/required-player-strategy.json"
     },
     {
       "id": "game-clock",
       "type": "ae/game-clock",
       "version": "1.0.0",
-      "path": "interfaces/required/game-clock.json"
+      "path": "interfaces/required-game-clock.json"
     },
     {
       "id": "seating",
       "type": "ae/seating",
       "version": "1.0.0",
-      "path": "interfaces/required/seating.json"
+      "path": "interfaces/required-seating.json"
     }
   ],
   "collect": [
