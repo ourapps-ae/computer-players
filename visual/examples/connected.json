@@ -12,7 +12,7 @@
       "kind": "component",
       "status": "example",
       "package": "ourapps-ae/computer-players",
-      "version": "0.4.0",
+      "version": "0.5.1",
       "ports": [
         {
           "id": "player-strategy",

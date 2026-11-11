@@ -3,7 +3,7 @@
 ## For the agent
 Select `ourapps-ae/computer-players` once per recipe, always. Map the recipe's computer players answer to `mode`: `none`, `on-request` (default) or `fill-empty`. Set `names` only when the recipe has its own list. Connect `player-strategy` to the strategy component (poker-strategy for poker), `game-clock` and `seating`, then connect the provided `computer-players` to turn-engine (it needs the port even for mode `none`). Give `names` as words separated by spaces.
 
-- Select package `ourapps-ae/computer-players` version `0.5.0`.
+- Select package `ourapps-ae/computer-players` version `0.5.1`.
 - Settings to configure:
   - `names` (string, label; optional; default `Robin Sam Alex Jordan Casey Morgan Taylor Riley`)
   - `mode` (string, label; optional; default `on-request`; `none`, `on-request` or `fill-empty`)
