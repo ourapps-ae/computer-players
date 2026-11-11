@@ -21,7 +21,7 @@ Settings (all optional): `names` (a space separated list, default eight neutral 
 - `implementation/server/computers.ts` -> `components/computer-players/server/computers.ts`
 
 Dependencies: none.
-`tools.lock.json` pins verification tools: node 26.5.0. Licence: `Apache-2.0` (`LICENCE`, `NOTICE`).
+`tools.lock.json` pins verification tools: node 26.5. Licence: `Apache-2.0` (`LICENCE`, `NOTICE`).
 
 ## Provided interfaces
 - `interfaces/computer-players.json` defines `computer-players` (ae/computer-players) version 1.0.0: an OpenRPC 1.3.2 document, one method per function (a member of a created object is `<Type>.<member>`), with parameter, result and data types as JSON Schema 2020-12 (`components.schemas`) and thrown errors under `errors`.
@@ -45,7 +45,7 @@ No service is deployed. The only state is the strategy's memory, part of the gam
 ## Verification
 `node --test tests/web.test.ts` checks settings, neutral default names (none of the recipe's poker names), name list parsing (space separated, the default fitting aepm's label grammar), `mode` (the default, the three derived values for each mode, refusal of an unknown mode), mode `none`, adding until names or seats run out, filling, take-over of absent players, deadline arithmetic (settle, gap, thinking time, bounds), wake time, rebuy time, strategy calls that cannot change the stored memory, and the runnable consumer. The tests use small stand-ins for the strategy, clock and seating (`tests/fakes.ts`). No Swift or Kotlin: the recipe's clients have no computer-player code.
 
-- `node --test tests/web.test.ts` (web, required-local; tools: node 26.5.0)
+- `node --test tests/web.test.ts` (web, required-local; tools: node 26.5)
 
 ## Scenarios and presentation
 A person sits alone, taps add computer and a computer named Robin sits. With mode `fill-empty` the host starts with two people at a nine-seat room and seven computers join. A computer is next to act at action-clock 10000 with the table settled at 14000: it moves at 14000 plus 300 plus up to 1200 more. With mode `on-request` or `fill-empty` the computer side plays for a person whose connection has gone.

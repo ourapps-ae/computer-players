@@ -1,6 +1,6 @@
 # Source mapping
 
-Reference revision: `19905b75dbea89fbfd424d67fe26c81aaed0e018`. Extraction source: `OurPoker/recipe/` (read-only).
+Reference revision: `19905b75dbea89fbfd424d67fe26c81aaed0e018`. Extraction source: the `recipe/` folder of `ourapps-ae/OurPoker`; paths below are relative to it.
 
 - `implementation/server/computers.ts` <- `server/src/engine.ts`, `server/src/adapter.ts` and `server/src/bot.ts`:
   - `BOT_NAMES` 411 and `addBot` 413-419 (first unused name, lobby action by a person, id `bot-<name>`): `nextName`, `add`, `idFor` (id now `computer-<name>`); names are a setting. The recipe's eight poker-player names are left out of the component; the shipped default list is neutral first names.
