@@ -5,13 +5,20 @@
       "executable": false,
       "source": "implementation/server/computers.ts",
       "template": false
+    },
+    {
+      "destination": "components/computer-players/server/index.ts",
+      "executable": false,
+      "source": "implementation/server/index.ts",
+      "template": false
     }
   ],
   "capabilities": {
     "hosts": [],
     "secrets": [],
     "writes": [
-      "components/computer-players/server/computers.ts"
+      "components/computer-players/server/computers.ts",
+      "components/computer-players/server/index.ts"
     ]
   },
   "collect": [
@@ -129,6 +136,10 @@
     {
       "executable": false,
       "path": "implementation/server/computers.ts"
+    },
+    {
+      "executable": false,
+      "path": "implementation/server/index.ts"
     },
     {
       "executable": false,
