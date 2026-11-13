@@ -1,6 +1,6 @@
 {
   "name": "computer-players",
-  "version": "0.5.1",
+  "version": "0.6.0",
   "title": "Computer players",
   "description": "Computer players that fill empty seats, play for people who are away, and wait a human-like time before moving, over an injected player strategy, game clock and seating.",
   "facilities": [
